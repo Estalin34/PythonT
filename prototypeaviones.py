@@ -36,11 +36,11 @@ class AvionBombardero(Avion):
     def __str__(self):
         return super().__str__() + f", Capacidad de Bombas: {self.capacidad_bombas} kg"
 
-# Prototipos
+
 avion_combate_prototipo = AvionCombate("F-22 Raptor", 2410, ["Misiles AIM-9", "Misiles AIM-120"], "Alta")
 avion_bombardero_prototipo = AvionBombardero("B-2 Spirit", 1010, ["Bombas JDAM", "Misiles de crucero"], 20000)
 
-# Clonando aviones
+
 avion1 = avion_combate_prototipo.clone()
 avion1.modelo = "F-35 Lightning II"
 avion1.velocidad_maxima = 1930

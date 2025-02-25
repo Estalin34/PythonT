@@ -79,13 +79,13 @@ class DirectorCasa:
         self.constructor.construir_techo()
 
 
-# Construcción y prueba de una casa de madera
+
 constructor_madera = ConstructorCasaMadera()
 director_madera = DirectorCasa(constructor_madera)
 director_madera.construir_casa_completa()
 print(constructor_madera.obtener_casa())
 
-# Construcción y prueba de una casa de ladrillo
+
 constructor_ladrillo = ConstructorCasaLadrillo()
 director_ladrillo = DirectorCasa(constructor_ladrillo)
 director_ladrillo.construir_casa_completa()

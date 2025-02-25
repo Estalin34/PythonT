@@ -102,13 +102,13 @@ class DirectorCasa {
 
 public class buildercasa {
     public static void main(String[] args) {
-        // Construcción y prueba de una casa de madera
+        
         ConstructorCasa constructorMadera = new ConstructorCasaMadera();
         DirectorCasa directorMadera = new DirectorCasa(constructorMadera);
         directorMadera.construirCasaCompleta();
         System.out.println(constructorMadera.obtenerCasa());
 
-        // Construcción y prueba de una casa de ladrillo
+        
         ConstructorCasa constructorLadrillo = new ConstructorCasaLadrillo();
         DirectorCasa directorLadrillo = new DirectorCasa(constructorLadrillo);
         directorLadrillo.construirCasaCompleta();
