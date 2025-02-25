@@ -1,49 +1,78 @@
+import java.util.ArrayList;
+import java.util.List;
 
-class AvionPrototype implements Cloneable {
-    private String modelo;
-    private int capacidad;
-    private int alcance;
+abstract class Avion implements Cloneable {
+    protected String modelo;
+    protected int velocidadMaxima;
+    protected List<String> armamento;
 
-    public AvionPrototype(String modelo, int capacidad, int alcance) {
+    public Avion(String modelo, int velocidadMaxima, List<String> armamento) {
         this.modelo = modelo;
-        this.capacidad = capacidad;
-        this.alcance = alcance;
+        this.velocidadMaxima = velocidadMaxima;
+        this.armamento = new ArrayList<>(armamento);
     }
+
+    public abstract Avion clone();
 
     @Override
-    public AvionPrototype clone() {
-        try {
-            return (AvionPrototype) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException("Error al clonar el avión", e);
-        }
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
-    public void setCapacidad(int capacidad) {
-        this.capacidad = capacidad;
-    }
-
-    public void mostrarInfo() {
-        System.out.println("Modelo: " + modelo + ", Capacidad: " + capacidad + " pasajeros, Alcance: " + alcance + " km");
+    public String toString() {
+        return "Modelo: " + modelo + ", Velocidad Máxima: " + velocidadMaxima + " km/h, Armamento: " + armamento;
     }
 }
 
-public class prototypeaviones {
+class AvionCombate extends Avion {
+    private String maniobrabilidad;
+
+    public AvionCombate(String modelo, int velocidadMaxima, List<String> armamento, String maniobrabilidad) {
+        super(modelo, velocidadMaxima, armamento);
+        this.maniobrabilidad = maniobrabilidad;
+    }
+
+    @Override
+    public Avion clone() {
+        return new AvionCombate(modelo, velocidadMaxima, armamento, maniobrabilidad);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Maniobrabilidad: " + maniobrabilidad;
+    }
+}
+
+class AvionBombardero extends Avion {
+    private int capacidadBombas;
+
+    public AvionBombardero(String modelo, int velocidadMaxima, List<String> armamento, int capacidadBombas) {
+        super(modelo, velocidadMaxima, armamento);
+        this.capacidadBombas = capacidadBombas;
+    }
+
+    @Override
+    public Avion clone() {
+        return new AvionBombardero(modelo, velocidadMaxima, armamento, capacidadBombas);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Capacidad de Bombas: " + capacidadBombas + " kg";
+    }
+}
+
+public class prototypeaviones{
     public static void main(String[] args) {
-        AvionPrototype prototipo = new AvionPrototype("Boeing 747", 400, 13000);
+        List<String> armamentoCombate = List.of("Misiles AIM-9", "Misiles AIM-120");
+        List<String> armamentoBombardero = List.of("Bombas JDAM", "Misiles de crucero");
 
-       
-        AvionPrototype avion1 = prototipo.clone();
-        avion1.setModelo("Airbus A380");
+        AvionCombate avionCombatePrototipo = new AvionCombate("F-22 Raptor", 2410, armamentoCombate, "Alta");
+        AvionBombardero avionBombarderoPrototipo = new AvionBombardero("B-2 Spirit", 1010, armamentoBombardero, 20000);
 
-        AvionPrototype avion2 = prototipo.clone();
-        avion2.setCapacidad(500);
+        Avion avion1 = avionCombatePrototipo.clone();
+        avion1.modelo = "F-35 Lightning II";
+        
+        Avion avion2 = avionBombarderoPrototipo.clone();
+        avion2.modelo = "B-52 Stratofortress";
 
-        avion1.mostrarInfo();  
-        avion2.mostrarInfo();  
+        System.out.println(avion1);
+        System.out.println(avion2);
     }
 }

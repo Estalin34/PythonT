@@ -1,27 +1,53 @@
 import copy
+from abc import ABC, abstractmethod
 
-class AvionPrototype:
-    def __init__(self, modelo, capacidad, alcance):
+class Avion(ABC):
+    def __init__(self, modelo, velocidad_maxima, armamento):
         self.modelo = modelo
-        self.capacidad = capacidad
-        self.alcance = alcance  
+        self.velocidad_maxima = velocidad_maxima
+        self.armamento = armamento
+    
+    @abstractmethod
+    def clone(self):
+        pass
 
+    def __str__(self):
+        return f"Modelo: {self.modelo}, Velocidad Máxima: {self.velocidad_maxima} km/h, Armamento: {', '.join(self.armamento)}"
+    
+class AvionCombate(Avion):
+    def __init__(self, modelo, velocidad_maxima, armamento, maniobrabilidad):
+        super().__init__(modelo, velocidad_maxima, armamento)
+        self.maniobrabilidad = maniobrabilidad
+    
     def clone(self):
         return copy.deepcopy(self)
+    
+    def __str__(self):
+        return super().__str__() + f", Maniobrabilidad: {self.maniobrabilidad}"
+    
+class AvionBombardero(Avion):
+    def __init__(self, modelo, velocidad_maxima, armamento, capacidad_bombas):
+        super().__init__(modelo, velocidad_maxima, armamento)
+        self.capacidad_bombas = capacidad_bombas
+    
+    def clone(self):
+        return copy.deepcopy(self)
+    
+    def __str__(self):
+        return super().__str__() + f", Capacidad de Bombas: {self.capacidad_bombas} kg"
 
-    def mostrar_info(self):
-        return f"Modelo: {self.modelo}, Capacidad: {self.capacidad} pasajeros, Alcance: {self.alcance} km"
+# Prototipos
+avion_combate_prototipo = AvionCombate("F-22 Raptor", 2410, ["Misiles AIM-9", "Misiles AIM-120"], "Alta")
+avion_bombardero_prototipo = AvionBombardero("B-2 Spirit", 1010, ["Bombas JDAM", "Misiles de crucero"], 20000)
 
+# Clonando aviones
+avion1 = avion_combate_prototipo.clone()
+avion1.modelo = "F-35 Lightning II"
+avion1.velocidad_maxima = 1930
 
-prototipo_avion = AvionPrototype("Boeing 747", 400, 13000)
+avion2 = avion_bombardero_prototipo.clone()
+avion2.modelo = "B-52 Stratofortress"
+avion2.capacidad_bombas = 32000
 
-
-avion1 = prototipo_avion.clone()
-avion1.modelo = "Airbus A380"
-
-
-avion2 = prototipo_avion.clone()
-avion2.capacidad = 500
-
-print(avion1.mostrar_info())  
-print(avion2.mostrar_info())  
+print(avion1)
+print(avion2)

@@ -1,14 +1,14 @@
 class Casa:
     def __init__(self):
         self.partes = []
+        self.costo_total = 0.0
     
-    def agregar(self, parte):
-        self.partes.append(parte)
+    def agregar(self, parte, costo):
+        self.partes.append(f"{parte} - ${costo:.2f}")
+        self.costo_total += costo
     
     def __str__(self):
-        return "Casa:\n" + "\n".join(self.partes)
-    def get_total_cost(self):
-        return sum(item.get_cost() for item in self.items)
+        return "Casa:\n" + "\n".join(self.partes) + f"\nCosto Total: ${self.costo_total:.2f}"
 
 
 class ConstructorCasa:
@@ -36,30 +36,30 @@ class ConstructorCasa:
 
 class ConstructorCasaMadera(ConstructorCasa):
     def construir_paredes(self):
-        self.casa.agregar("Paredes de madera",0.85)
+        self.casa.agregar("Paredes de madera", 5000)
     
     def construir_techo(self):
-        self.casa.agregar("Techo de madera",15)
+        self.casa.agregar("Techo de madera", 3000)
     
     def construir_puertas(self):
-        self.casa.agregar("Puertas de madera",31)
+        self.casa.agregar("Puertas de madera", 1200)
     
     def construir_ventanas(self):
-        self.casa.agregar("Ventanas de vidrio",30)
+        self.casa.agregar("Ventanas de vidrio", 2000)
 
 
 class ConstructorCasaLadrillo(ConstructorCasa):
     def construir_paredes(self):
-        self.casa.agregar("Paredes de ladrillo",0.85)
+        self.casa.agregar("Paredes de ladrillo", 8000)
     
     def construir_techo(self):
-        self.casa.agregar("Techo de tejas",15)
+        self.casa.agregar("Techo de tejas", 5000)
     
     def construir_puertas(self):
-        self.casa.agregar("Puertas de metal",34)
+        self.casa.agregar("Puertas de metal", 2000)
     
     def construir_ventanas(self):
-        self.casa.agregar("Ventanas de vidrio reforzado",30)
+        self.casa.agregar("Ventanas de vidrio reforzado", 2500)
 
 
 class DirectorCasa:

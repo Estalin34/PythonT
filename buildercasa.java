@@ -1,67 +1,117 @@
-class Casa {
-    private int habitaciones;
-    private int baños;
-    private int pisos;
-    private boolean piscina;
-    private boolean garaje;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Casa(int habitaciones, int baños, int pisos, boolean piscina, boolean garaje) {
-        this.habitaciones = habitaciones;
-        this.baños = baños;
-        this.pisos = pisos;
-        this.piscina = piscina;
-        this.garaje = garaje;
+class Casa {
+    private List<String> partes;
+    private double costoTotal;
+
+    public Casa() {
+        this.partes = new ArrayList<>();
+        this.costoTotal = 0.0;
     }
 
-    public void mostrarInfo() {
-        System.out.println("Casa con " + habitaciones + " habitaciones, " + baños + " baños, " + pisos + " pisos, " +
-                (piscina ? "con piscina" : "sin piscina") + ", " + (garaje ? "con garaje" : "sin garaje") + ".");
+    public void agregar(String parte, double costo) {
+        this.partes.add(parte + " - $" + String.format("%.2f", costo));
+        this.costoTotal += costo;
+    }
+
+    @Override
+    public String toString() {
+        return "Casa:\n" + String.join("\n", partes) + "\nCosto Total: $" + String.format("%.2f", costoTotal);
     }
 }
 
-class CasaBuilder {
-    private int habitaciones = 0;
-    private int baños = 0;
-    private int pisos = 1;
-    private boolean piscina = false;
-    private boolean garaje = false;
+abstract class ConstructorCasa {
+    protected Casa casa;
 
-    public CasaBuilder setHabitaciones(int habitaciones) {
-        this.habitaciones = habitaciones;
-        return this;
+    public ConstructorCasa() {
+        this.casa = new Casa();
     }
 
-    public CasaBuilder setBaños(int baños) {
-        this.baños = baños;
-        return this;
+    public abstract void construirParedes();
+    public abstract void construirTecho();
+    public abstract void construirPuertas();
+    public abstract void construirVentanas();
+
+    public void reiniciar() {
+        this.casa = new Casa();
     }
 
-    public CasaBuilder setPisos(int pisos) {
-        this.pisos = pisos;
-        return this;
+    public Casa obtenerCasa() {
+        return this.casa;
+    }
+}
+
+class ConstructorCasaMadera extends ConstructorCasa {
+    public void construirParedes() {
+        casa.agregar("Paredes de madera", 5000);
     }
 
-    public CasaBuilder agregarPiscina() {
-        this.piscina = true;
-        return this;
+    public void construirTecho() {
+        casa.agregar("Techo de madera", 3000);
     }
 
-    public CasaBuilder agregarGaraje() {
-        this.garaje = true;
-        return this;
+    public void construirPuertas() {
+        casa.agregar("Puertas de madera", 1200);
     }
 
-    public Casa build() {
-        return new Casa(habitaciones, baños, pisos, piscina, garaje);
+    public void construirVentanas() {
+        casa.agregar("Ventanas de vidrio", 2000);
+    }
+}
+
+class ConstructorCasaLadrillo extends ConstructorCasa {
+    public void construirParedes() {
+        casa.agregar("Paredes de ladrillo", 8000);
+    }
+
+    public void construirTecho() {
+        casa.agregar("Techo de tejas", 5000);
+    }
+
+    public void construirPuertas() {
+        casa.agregar("Puertas de metal", 2000);
+    }
+
+    public void construirVentanas() {
+        casa.agregar("Ventanas de vidrio reforzado", 2500);
+    }
+}
+
+class DirectorCasa {
+    private ConstructorCasa constructor;
+
+    public DirectorCasa(ConstructorCasa constructor) {
+        this.constructor = constructor;
+    }
+
+    public void construirCasaCompleta() {
+        constructor.reiniciar();
+        constructor.construirParedes();
+        constructor.construirTecho();
+        constructor.construirPuertas();
+        constructor.construirVentanas();
+    }
+
+    public void construirCasaBasica() {
+        constructor.reiniciar();
+        constructor.construirParedes();
+        constructor.construirTecho();
     }
 }
 
 public class buildercasa {
     public static void main(String[] args) {
-        Casa casa1 = new CasaBuilder().setHabitaciones(3).setBaños(2).setPisos(2).agregarGaraje().build();
-        Casa casa2 = new CasaBuilder().setHabitaciones(5).setBaños(3).setPisos(3).agregarPiscina().agregarGaraje().build();
+        // Construcción y prueba de una casa de madera
+        ConstructorCasa constructorMadera = new ConstructorCasaMadera();
+        DirectorCasa directorMadera = new DirectorCasa(constructorMadera);
+        directorMadera.construirCasaCompleta();
+        System.out.println(constructorMadera.obtenerCasa());
 
-        casa1.mostrarInfo();  
-        casa2.mostrarInfo();  
+        // Construcción y prueba de una casa de ladrillo
+        ConstructorCasa constructorLadrillo = new ConstructorCasaLadrillo();
+        DirectorCasa directorLadrillo = new DirectorCasa(constructorLadrillo);
+        directorLadrillo.construirCasaCompleta();
+        System.out.println(constructorLadrillo.obtenerCasa());
     }
 }
