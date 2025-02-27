@@ -1,9 +1,9 @@
-// Interfaz base para notificaciones
+
 interface Notificador {
     void enviar(String mensaje);
 }
 
-// Componente base: Notificación por Email
+
 class NotificadorEmail implements Notificador {
     @Override
     public void enviar(String mensaje) {
@@ -11,7 +11,7 @@ class NotificadorEmail implements Notificador {
     }
 }
 
-// Decorador base
+
 abstract class NotificadorDecorator implements Notificador {
     protected Notificador notificador;
 
@@ -25,7 +25,7 @@ abstract class NotificadorDecorator implements Notificador {
     }
 }
 
-// Decorador para SMS
+
 class NotificadorSMS extends NotificadorDecorator {
     public NotificadorSMS(Notificador notificador) {
         super(notificador);
@@ -38,7 +38,6 @@ class NotificadorSMS extends NotificadorDecorator {
     }
 }
 
-// Decorador para WhatsApp
 class NotificadorWhatsApp extends NotificadorDecorator {
     public NotificadorWhatsApp(Notificador notificador) {
         super(notificador);
@@ -51,7 +50,6 @@ class NotificadorWhatsApp extends NotificadorDecorator {
     }
 }
 
-// Uso del patrón Decorator
 public class decoratorwhastsapp{
     public static void main(String[] args) {
         Notificador notificadorBasico = new NotificadorEmail();

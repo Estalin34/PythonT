@@ -1,10 +1,7 @@
 
-// Interfaz Archivo
 interface Archivo {
     void ejecutar();
 }
-
-// Implementación real del virus
 class Virus implements Archivo {
     private String nombre;
 
@@ -14,7 +11,7 @@ class Virus implements Archivo {
 
     @Override
     public void ejecutar() {
-        System.out.println("⚠️ Ejecutando virus: " + nombre + " ⚠️");
+        System.out.println(" Ejecutando virus: " + nombre + " ");
     }
 }
 
@@ -37,7 +34,7 @@ class ProxyVirus implements Archivo {
             }
             virus.ejecutar();
         } else {
-            System.out.println("❌ Acceso denegado al virus " + nombre + " para el usuario " + usuario);
+            System.out.println(" Acceso denegado al virus " + nombre + " para el usuario " + usuario);
         }
     }
 }

@@ -15,6 +15,7 @@ class Casa {
         this.costoTotal += costo;
     }
 
+
     @Override
     public String toString() {
         return "Casa:\n" + String.join("\n", partes) + "\nCosto Total: $" + String.format("%.2f", costoTotal);
@@ -115,3 +116,5 @@ public class buildercasa {
         System.out.println(constructorLadrillo.obtenerCasa());
     }
 }
+
+

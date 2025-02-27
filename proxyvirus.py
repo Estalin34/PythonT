@@ -10,7 +10,7 @@ class Virus(Archivo):
         self.nombre = nombre
     
     def ejecutar(self):
-        print(f"⚠️ Ejecutando el virus: {self.nombre}... ⚠️")
+        print(f" Ejecutando el virus: {self.nombre}... ")
 
 class ProxyVirus(Archivo):
     def __init__(self, nombre, usuario):
@@ -24,7 +24,7 @@ class ProxyVirus(Archivo):
                 self.virus_real = Virus(self.nombre)
             self.virus_real.ejecutar()
         else: 
-            print(f"❌ Acceso denegado: El usuario '{self.usuario}' no tiene permisos para ejecutar {self.nombre}")
+            print(f" Acceso denegado: El usuario '{self.usuario}' no tiene permisos para ejecutar {self.nombre}")
 
 # Simulación de acceso al virus
 archivo1 = ProxyVirus("troyano.exe", "admin")

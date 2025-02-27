@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-// Clase compartida (Flyweight)
+
 class TipoZombie {
     private String nombre;
     private String textura;
@@ -14,24 +14,24 @@ class TipoZombie {
     }
 
     public void mostrar(int x, int y) {
-        System.out.println("🧟 " + nombre + " aparece en (" + x + "," + y + ") con textura " + textura + " y sonido " + sonido);
+        System.out.println(" " + nombre + " aparece en (" + x + "," + y + ") con textura " + textura + " y sonido " + sonido);
     }
 }
 
-// Fábrica de zombies (Flyweight Factory)
+
 class FabricaZombies {
     private static final Map<String, TipoZombie> tipos = new HashMap<>();
 
     public static TipoZombie obtenerTipoZombie(String nombre, String textura, String sonido) {
         if (!tipos.containsKey(nombre)) {
-            System.out.println("🆕 Creando nuevo tipo de zombie: " + nombre);
+            System.out.println(" Creando nuevo tipo de zombie: " + nombre);
             tipos.put(nombre, new TipoZombie(nombre, textura, sonido));
         }
         return tipos.get(nombre);
     }
 }
 
-// Objeto que usa el Flyweight
+
 class Zombie {
     private TipoZombie tipo;
     private int x, y;
